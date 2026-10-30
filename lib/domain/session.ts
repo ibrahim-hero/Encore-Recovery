@@ -33,15 +33,48 @@ function readCookie(req: Request, name: string): string | undefined {
   return undefined
 }
 
-export function assertSameOrigin(req: Request): void {
-  const origin = req.headers.get('origin')
+function originOf(value: string | undefined, assumeHttps = false): string | undefined {
+  if (!value) return undefined
+  try {
+    return new URL(assumeHttps && !value.includes('://') ? `https://${value}` : value).origin
+  } catch {
+    return undefined
+  }
+}
+
+// Exact origins only, never patterns. The v0 preview serves the app on a public
+// URL (V0_RUNTIME_URL) while requests reach the server through the sandbox host.
+function trustedOrigins(req: Request): Set<string> {
   const c = getConfig()
-  const allowed = new Set([requestOrigin(req)])
-  if (c.APP_ORIGIN) allowed.add(c.APP_ORIGIN)
-  const localOk = c.deploymentTarget === 'local' && origin?.startsWith('http://localhost:')
-  if (!origin || (!allowed.has(origin) && !localOk)) {
+  const candidates =
+    process.env.NODE_ENV === 'development'
+      ? [process.env.V0_RUNTIME_URL, process.env.V0_DEV_APP_URL, process.env.V0_BUILD_URL, process.env.V0_SANDBOX_URL].map(
+          (v) => originOf(v),
+        )
+      : [process.env.VERCEL_URL, process.env.VERCEL_PROJECT_PRODUCTION_URL].map((v) => originOf(v, true))
+  return new Set(
+    [requestOrigin(req), originOf(c.APP_ORIGIN), ...candidates].filter((o): o is string => Boolean(o)),
+  )
+}
+
+function isTrustedOrigin(req: Request, origin: string | null): origin is string {
+  if (!origin) return false
+  if (trustedOrigins(req).has(origin)) return true
+  return getConfig().deploymentTarget === 'local' && origin.startsWith('http://localhost:')
+}
+
+export function assertSameOrigin(req: Request): void {
+  if (!isTrustedOrigin(req, req.headers.get('origin'))) {
     throw new AppError(403, 'CSRF_INVALID', 'Origin not allowed')
   }
+}
+
+/** Origin the buyer's browser is actually on; PayPal must send them back there so their session cookie applies. */
+export function publicOrigin(req: Request): string {
+  const configured = originOf(getConfig().APP_ORIGIN)
+  if (configured) return configured
+  const browser = req.headers.get('origin')
+  return isTrustedOrigin(req, browser) ? browser : requestOrigin(req)
 }
 
 export async function createSession(): Promise<{ token: string; ctx: SessionContext }> {
