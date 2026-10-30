@@ -4,160 +4,133 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+  Encore Recovery — "Proof Canvas" design tokens (plan section 19).
+  A calm financial casebook: warm off-white canvas, white evidence cards,
+  deep ink for money, one teal action color. Status is always text + icon,
+  never color alone.
+*/
 @theme inline {
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-foreground: var(--foreground);
-  --color-background: var(--background);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-subdued: var(--surface-subdued);
+  --color-ink: var(--ink);
+  --color-ink-body: var(--ink-body);
+  --color-ink-muted: var(--ink-muted);
+  --color-action: var(--action);
+  --color-action-hover: var(--action-hover);
+  --color-link: var(--link);
+  --color-attention: var(--attention);
+  --color-attention-bg: var(--attention-bg);
+  --color-failure: var(--failure);
+  --color-failure-bg: var(--failure-bg);
+  --color-confirmed: var(--confirmed);
+  --color-confirmed-bg: var(--confirmed-bg);
+  --color-line: var(--line);
+
+  --color-sidebar-ring: var(--ring);
+  --color-sidebar-border: var(--line);
+  --color-sidebar-accent-foreground: var(--ink);
+  --color-sidebar-accent: var(--surface-subdued);
+  --color-sidebar-primary-foreground: var(--surface);
+  --color-sidebar-primary: var(--action);
+  --color-sidebar-foreground: var(--ink-body);
+  --color-sidebar: var(--canvas);
+  --color-chart-5: var(--confirmed);
+  --color-chart-4: var(--attention);
+  --color-chart-3: var(--link);
+  --color-chart-2: var(--action);
+  --color-chart-1: var(--ink);
+  --color-ring: var(--action);
+  --color-input: var(--line);
+  --color-border: var(--line);
+  --color-destructive: var(--failure);
+  --color-accent-foreground: var(--ink);
+  --color-accent: var(--surface-subdued);
+  --color-muted-foreground: var(--ink-muted);
+  --color-muted: var(--surface-subdued);
+  --color-secondary-foreground: var(--ink);
+  --color-secondary: var(--surface-subdued);
+  --color-primary-foreground: var(--surface);
+  --color-primary: var(--action);
+  --color-popover-foreground: var(--ink-body);
+  --color-popover: var(--surface);
+  --color-card-foreground: var(--ink-body);
+  --color-card: var(--surface);
+  --color-foreground: var(--ink-body);
+  --color-background: var(--canvas);
+
+  --radius-sm: 0.5rem; /* 8px controls */
+  --radius-md: 0.625rem;
+  --radius-lg: 0.75rem; /* 12px cards */
+  --radius-xl: 1rem;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
 }
 
 :root {
-  color-scheme: light;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --canvas: #f5f3ee;
+  --surface: #ffffff;
+  --surface-subdued: #eef2f1;
+  --ink: #142b35;
+  --ink-body: #253d46;
+  --ink-muted: #53666d;
+  --action: #006c67;
+  --action-hover: #005a56;
+  --link: #275ac7;
+  --attention: #8a4b08;
+  --attention-bg: #fff0d8;
+  --failure: #a63237;
+  --failure-bg: #fbecee;
+  --confirmed: #0d6a49;
+  --confirmed-bg: #e9f6ef;
+  --line: #d7dedc;
+  --radius: 0.75rem;
 }
 
-.dark {
-  color-scheme: dark;
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* Money and IDs always use tabular numerals (plan section 19). */
+.tnum {
+  font-variant-numeric: tabular-nums;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    color-scheme: dark;
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+/* Short, purposeful transitions only; respect reduced motion (section 22). */
+@media (prefers-reduced-motion: no-preference) {
+  .encore-fade {
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
+/* Receipt paper: restrained inset surface with a thin perforation motif. */
+.receipt-paper {
+  background:
+    radial-gradient(circle at 0 0, transparent 0, transparent 0),
+    var(--surface);
+  box-shadow:
+    inset 0 0 0 1px var(--line),
+    0 1px 2px rgb(20 43 53 / 0.05);
+}
+.receipt-perforation {
+  background-image: linear-gradient(to right, var(--line) 55%, transparent 45%);
+  background-size: 12px 1px;
+  background-repeat: repeat-x;
+  height: 1px;
+}
+
+@media print {
+  .receipt-paper {
+    box-shadow: none;
+    border: 1px solid var(--line);
   }
-  body {
-    @apply bg-background text-foreground;
+  .print-hidden {
+    display: none !important;
   }
 }

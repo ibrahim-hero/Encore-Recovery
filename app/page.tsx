@@ -1,47 +1,79 @@
-export default function Page() {
+import Link from 'next/link'
+import { ArrowRight, ShieldCheck, Eye, FlaskConical } from 'lucide-react'
+import { Wordmark, ReconnectGlyph } from '@/components/encore/wordmark'
+
+// Product entry: brief explanation, Start guided sandbox demo, View how it
+// works, and a visible sandbox purpose (plan section 23).
+export default function EntryPage() {
   return (
-    <main
-      style={{
-        colorScheme: 'light dark',
-        position: 'relative',
-        display: 'flex',
-        minHeight: '100vh',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'light-dark(#fff, #000)',
-        color: 'light-dark(#000, #fff)',
-      }}
-    >
-      <svg
-        aria-hidden="true"
-        style={{ width: 80, height: 80 }}
-        width={80}
-        height={80}
-        fill="none"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
-        stroke="currentColor"
-        strokeWidth="0.5"
-      >
-        <path
-          d="M14.2 14.2H17V6.9375C17 4.76288 15.2371 3 13.0625 3H5.8V5.8M14.2 14.2V7.79063L7.79062 14.2H14.2ZM14.2 14.2V17H6.9375C4.76288 17 3 15.2371 3 13.0625V5.8H5.8M5.8 5.8V12.2313L12.2313 5.8H5.8Z"
-          strokeLinejoin="round"
-        />
-      </svg>
-      <p
-        style={{
-          position: 'absolute',
-          left: '50%',
-          top: 'calc(50% + 56px)',
-          transform: 'translateX(-50%)',
-          whiteSpace: 'nowrap',
-          fontSize: '14px',
-          fontWeight: 500,
-          color: 'light-dark(#71717a, #a1a1aa)',
-        }}
-      >
-        Your v0 generation will show here.
-      </p>
+    <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-4 py-6 md:px-8">
+      <header className="flex items-center justify-between">
+        <Wordmark />
+        <span className="rounded-full bg-attention-bg px-3 py-1 text-xs font-semibold text-attention">
+          SANDBOX
+        </span>
+      </header>
+
+      <div className="flex flex-1 flex-col justify-center py-16">
+        <ReconnectGlyph className="h-2 w-12" />
+        <h1 className="mt-6 max-w-2xl text-balance text-4xl font-semibold tracking-tight text-ink md:text-5xl">
+          When a booking is paid but can&apos;t be fulfilled, prove it — then refund it.
+        </h1>
+        <p className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-ink-body">
+          Encore Recovery reconciles three sources of truth — the booking, merchant fulfillment, and
+          PayPal money — diagnoses the disagreement, and executes a verified, idempotent refund with
+          an immutable evidence receipt.
+        </p>
+
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <Link
+            href="/demo"
+            className="flex min-h-11 items-center gap-2 rounded-lg bg-action px-5 text-sm font-semibold text-surface transition-colors hover:bg-action-hover"
+          >
+            <FlaskConical aria-hidden className="size-4" />
+            Start guided sandbox demo
+          </Link>
+          <Link
+            href="/recovery"
+            className="flex min-h-11 items-center gap-2 rounded-lg border border-line bg-surface px-5 text-sm font-semibold text-ink transition-colors hover:bg-surface-subdued"
+          >
+            <Eye aria-hidden className="size-4" />
+            View how it works
+          </Link>
+        </div>
+
+        <p className="mt-6 max-w-xl text-sm leading-relaxed text-ink-muted">
+          This demonstration runs entirely against PayPal Sandbox. No real money moves; every
+          payment and refund fact is a verified sandbox read, and the merchant failure is a labeled
+          simulation.
+        </p>
+      </div>
+
+      <footer className="grid gap-3 border-t border-line pt-6 sm:grid-cols-3">
+        {[
+          {
+            icon: ShieldCheck,
+            title: 'Verified, never assumed',
+            body: 'Paid and refunded states come only from direct provider reads.',
+          },
+          {
+            icon: ArrowRight,
+            title: 'One next action',
+            body: 'Each case presents a single validated action with its exact reason.',
+          },
+          {
+            icon: Eye,
+            title: 'Evidence on demand',
+            body: 'Structured facts, observation times, and a replayable record.',
+          },
+        ].map((f) => (
+          <div key={f.title} className="rounded-xl border border-line bg-surface p-4">
+            <f.icon aria-hidden className="size-4 text-action" />
+            <h2 className="mt-2 text-sm font-semibold text-ink">{f.title}</h2>
+            <p className="mt-1 text-sm leading-relaxed text-ink-muted">{f.body}</p>
+          </div>
+        ))}
+      </footer>
     </main>
   )
 }
