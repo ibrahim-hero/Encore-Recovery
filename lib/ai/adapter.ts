@@ -60,7 +60,8 @@ Rules:
 export type DiagnosisGenerator = (snapshot: AnalysisSnapshot) => Promise<{ diagnosis: Diagnosis; model: string; repaired: boolean }>
 
 export const generateDiagnosis: DiagnosisGenerator = async (snapshot) => {
-  const model = getConfig().AI_MODEL
+  const cfg = getConfig()
+  const model = cfg.AI_MODEL
   // Tools are bound to this case's server-built snapshot; they accept no IDs.
   const noInput = z.object({}).strict()
   const tools = {
@@ -86,9 +87,9 @@ export const generateDiagnosis: DiagnosisGenerator = async (snapshot) => {
     }),
   }
 
-  const run = (correction?: string) =>
+  const run = (modelId: string, correction?: string) =>
     generateText({
-      model,
+      model: modelId,
       system: SYSTEM,
       prompt: correction
         ? `Diagnose recovery case ${snapshot.caseId}. Your previous answer was rejected: ${correction}. Fix it.`
@@ -96,26 +97,47 @@ export const generateDiagnosis: DiagnosisGenerator = async (snapshot) => {
       tools,
       stopWhen: isStepCount(8),
       output: Output.object({ schema: modelSchema }),
-      timeout: { totalMs: 30_000 },
-      maxOutputTokens: 1200,
+      timeout: { totalMs: 45_000 },
+      // Reasoning models spend part of this budget before emitting the object.
+      maxOutputTokens: 4000,
     })
 
-  let result
-  try {
-    result = await run()
-  } catch (err) {
-    throw new AnalysisError('MODEL_UNAVAILABLE', (err as Error).message.slice(0, 300))
+  // `output` throws when the run ended without a final object (e.g. token limit
+  // or step limit); treat that as invalid output so it gets the repair attempt.
+  const outputOf = (r: Awaited<ReturnType<typeof run>>): unknown => {
+    try {
+      return r.output
+    } catch {
+      return { error: `no final object (finishReason: ${r.finishReason})` }
+    }
   }
-  let checked = validateDiagnosis(result.output, snapshot)
-  if (checked.ok) return { diagnosis: checked.value, model, repaired: false }
+
+  // Fall over only on call failures (access, availability). Invalid output from a
+  // reachable model goes through the single repair attempt below instead.
+  const candidates = [model, ...cfg.AI_FALLBACK_MODELS.split(',').map((m) => m.trim()).filter(Boolean)]
+  let result: Awaited<ReturnType<typeof run>> | undefined
+  let used = model
+  const failures: string[] = []
+  for (const candidate of [...new Set(candidates)]) {
+    try {
+      result = await run(candidate)
+      used = candidate
+      break
+    } catch (err) {
+      failures.push(`${candidate}: ${(err as Error).message.slice(0, 120)}`)
+    }
+  }
+  if (!result) throw new AnalysisError('MODEL_UNAVAILABLE', failures.join(' | ').slice(0, 300))
+  let checked = validateDiagnosis(outputOf(result), snapshot)
+  if (checked.ok) return { diagnosis: checked.value, model: used, repaired: false }
 
   // At most one structured-output repair attempt (PDF section 16).
   try {
-    result = await run(checked.error)
+    result = await run(used, checked.error)
   } catch (err) {
     throw new AnalysisError('MODEL_UNAVAILABLE', (err as Error).message.slice(0, 300))
   }
-  checked = validateDiagnosis(result.output, snapshot)
-  if (checked.ok) return { diagnosis: checked.value, model, repaired: true }
+  checked = validateDiagnosis(outputOf(result), snapshot)
+  if (checked.ok) return { diagnosis: checked.value, model: used, repaired: true }
   throw new AnalysisError('INVALID_OUTPUT', checked.error.slice(0, 300))
 }

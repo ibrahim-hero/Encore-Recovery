@@ -116,7 +116,8 @@ export async function getCaseView(workspaceId: string, caseId: string): Promise<
   }>('SELECT id, type, source, summary, created_at, snapshot FROM audit_events WHERE booking_id = $1 ORDER BY created_at ASC', [c.booking_id])
 
   const actionVerb = isSandbox() ? 'Issue sandbox refund' : 'Issue fixture refund'
-  const busy = ['ANALYZING', 'EXECUTING', 'VERIFYING'].includes(c.state)
+  const opInFlight = !!op && ['QUEUED', 'SENDING', 'UNKNOWN', 'PROVIDER_PENDING'].includes(op.state)
+  const busy = opInFlight || ['ANALYZING', 'EXECUTING', 'VERIFYING'].includes(c.state)
 
   return {
     id: c.id,

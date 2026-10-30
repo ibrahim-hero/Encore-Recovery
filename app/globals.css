@@ -134,3 +134,15 @@
     display: none !important;
   }
 }
+
+/* Keep scrolled-to and focused content clear of the sticky header. */
+:root {
+  scroll-padding-top: 5rem;
+}
+
+/* Keep scrolled-to and keyboard-focused controls clear of the fixed mobile action bar. */
+@media (max-width: 47.99rem) {
+  :root:has([data-sticky-action]) {
+    scroll-padding-bottom: 6rem;
+  }
+}

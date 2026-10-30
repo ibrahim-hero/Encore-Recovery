@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import useSWR from 'swr'
 import { AlertTriangle, ArrowLeft } from 'lucide-react'
-import { apiPost, useApi, ApiError } from '@/lib/client/api'
+import { apiGet, apiPost, useApi, ApiError } from '@/lib/client/api'
 import type { CaseView, TruthFact } from '@/lib/view-types'
 import { TruthCard, ProofConnector } from './truth-card'
 import { MismatchRibbon } from './mismatch-ribbon'
@@ -28,10 +28,20 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
 
   // Preview has no long-running worker: while work is in flight, drain this
   // workspace's due jobs on the same cadence, then refresh the projection.
-  useSWR(data?.busy ? ['tick', caseId] : null, () => apiPost('/api/jobs/tick'), {
-    refreshInterval: 2500,
-    onSuccess: () => mutate(),
-  })
+  // The tick returns the post-drain projection and writes it directly, so a slower,
+  // older GET cannot overwrite it with stale state.
+  useSWR(
+    data?.busy ? ['tick', caseId] : null,
+    async () => {
+      await apiPost('/api/jobs/tick')
+      return apiGet<CaseView>(url)
+    },
+    {
+      refreshInterval: 2500,
+      revalidateOnFocus: false,
+      onSuccess: (fresh) => mutate(fresh, { revalidate: false }),
+    },
+  )
 
   const [drawerFact, setDrawerFact] = useState<TruthFact | null>(null)
   const [replayIndex, setReplayIndex] = useState<number | null>(null)
@@ -158,7 +168,7 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
       </div>
 
       {!replaying && caseData.preview && caseData.can.execute && (
-        <div className="fixed inset-x-0 bottom-0 z-10 border-t border-line bg-surface p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:hidden">
+        <div data-sticky-action className="fixed inset-x-0 bottom-0 z-10 border-t border-line bg-surface p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:hidden">
           <ExecuteButton label={caseData.preview.actionLabel} onClick={execute} pending={pending === 'execute'} />
         </div>
       )}

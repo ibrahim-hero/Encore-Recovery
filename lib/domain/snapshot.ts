@@ -32,10 +32,21 @@ export type AnalysisSnapshot = {
   untrustedCustomerNotes: { label: 'UNTRUSTED_CUSTOMER_DATA'; notes: string[] }
 }
 
+// Must cover every fact field the analysis tools return for each source.
 export const EVIDENCE_FIELDS: Record<string, string[]> = {
-  booking: ['fulfillment_status', 'payment_status', 'amount', 'fulfillment_reason'],
-  policy: ['text'],
-  capture: ['status', 'amount', 'currency'],
+  booking: [
+    'code',
+    'title',
+    'amount',
+    'currency',
+    'payment_status',
+    'fulfillment_status',
+    'fulfillment_reason',
+    'merchant_confirmed',
+    'simulated_failure',
+  ],
+  policy: ['version', 'text'],
+  capture: ['status', 'amount', 'currency', 'payee_matches_configured_merchant'],
   operation: ['state'],
 }
 
