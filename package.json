@@ -18,6 +18,8 @@
     "@base-ui/react": "^1.5.0",
     "@electric-sql/pglite": "^0.5.13",
     "@vercel/analytics": "1.6.1",
+    "ag-studio": "^3.0.0",
+    "ag-studio-react": "^3.0.0",
     "ai": "^7.0.157",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
