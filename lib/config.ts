@@ -34,7 +34,14 @@ let cached: AppConfig | undefined
 
 export function getConfig(): AppConfig {
   if (cached) return cached
-  const env = envSchema.parse(process.env)
+  // The PAYPAL_US_* trio (US Business sandbox account) overrides the original variables when set.
+  const pick = (us: string | undefined, base: string | undefined) => (us && us.trim() ? us : base)
+  const env = envSchema.parse({
+    ...process.env,
+    PAYPAL_CLIENT_ID: pick(process.env.PAYPAL_US_CLIENT_ID, process.env.PAYPAL_CLIENT_ID),
+    PAYPAL_CLIENT_SECRET: pick(process.env.PAYPAL_US_CLIENT_SECRET, process.env.PAYPAL_CLIENT_SECRET),
+    PAYPAL_MERCHANT_ID: pick(process.env.PAYPAL_US_MERCHANT_ID, process.env.PAYPAL_MERCHANT_ID),
+  })
   const deploymentTarget = env.DEPLOYMENT_TARGET ?? (process.env.VERCEL ? 'vercel' : 'local')
 
   if (env.APP_MODE === 'fixture' && deploymentTarget === 'render') {
