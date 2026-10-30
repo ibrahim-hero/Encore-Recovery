@@ -1,6 +1,6 @@
 import { CheckCircle2, AlertTriangle, XCircle, Clock, Info } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import type { FactTone } from '@/lib/fixtures'
+import type { FactTone } from '@/lib/view-types'
 
 // Status is always text + icon/shape, never color alone (plan section 22).
 const toneStyles: Record<FactTone | 'info', string> = {

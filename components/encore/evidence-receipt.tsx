@@ -1,12 +1,13 @@
 import { BadgeCheck } from 'lucide-react'
 import { formatMoney } from '@/lib/money'
-import type { RecoveryCase } from '@/lib/fixtures'
+import { fmtTime } from '@/lib/time'
+import type { CaseView } from '@/lib/view-types'
 
 // Evidence Receipt: immutable as-of summary on a restrained inset paper
 // surface with a thin perforation motif and the Encore verification mark.
-// The label is exactly "Verified against PayPal Sandbox" — the app's evidence
-// label, not PayPal certification (plan section 21).
-export function EvidenceReceipt({ caseData }: { caseData: RecoveryCase }) {
+// In sandbox mode the label is exactly "Verified against PayPal Sandbox";
+// fixture receipts say so explicitly (plan sections 21, D.12).
+export function EvidenceReceipt({ caseData }: { caseData: CaseView }) {
   const receipt = caseData.receipt
   if (!receipt) return null
 
@@ -26,12 +27,12 @@ export function EvidenceReceipt({ caseData }: { caseData: RecoveryCase }) {
             Evidence Receipt
           </h2>
           <p className="mt-0.5 text-xs text-ink-muted">
-            Version {receipt.version} · as-of {receipt.observedAt}
+            Version {receipt.version} · as-of {fmtTime(receipt.observedAt)}
           </p>
         </div>
         <span className="inline-flex items-center gap-1.5 rounded-full border border-confirmed/30 bg-confirmed-bg px-3 py-1.5 text-xs font-semibold text-confirmed">
           <BadgeCheck aria-hidden className="size-4" />
-          Verified against PayPal Sandbox
+          {receipt.verifiedAgainst}
         </span>
       </header>
 
@@ -40,25 +41,21 @@ export function EvidenceReceipt({ caseData }: { caseData: RecoveryCase }) {
           <div key={row.label} className="flex items-baseline justify-between gap-4 py-3">
             <dt className="text-sm text-ink-body">
               {row.label}
-              {row.id && (
-                <span className="tnum mt-0.5 block text-xs text-ink-muted">{row.id}</span>
-              )}
+              {row.id && <span className="tnum mt-0.5 block text-xs text-ink-muted">{row.id}</span>}
             </dt>
-            <dd className="tnum text-xl font-semibold text-ink">
-              {formatMoney(row.cents, caseData.currency)}
-            </dd>
+            <dd className="tnum text-xl font-semibold text-ink">{formatMoney(row.cents, caseData.currency)}</dd>
           </div>
         ))}
       </dl>
 
       <footer className="mt-4 border-t border-line pt-3 text-xs leading-relaxed text-ink-muted">
-        <p>
-          Mode: {caseData.mode} · Policy {receipt.policyVersion} · Plan {receipt.planId} · Operation{' '}
-          {receipt.operationId}
+        <p className="break-all">
+          Mode: {caseData.mode} · Policy {receipt.policyVersion} · Plan {receipt.planId.slice(0, 8)} · Operation{' '}
+          {receipt.operationId.slice(0, 8)}
         </p>
         <p className="mt-1">
-          Provider IDs and source timestamps come from runtime records. Generated{' '}
-          {receipt.generatedAt}.
+          Provider IDs and timestamps come from runtime records. Generated {fmtTime(receipt.generatedAt)}. Hash{' '}
+          <span className="tnum">{receipt.contentHash.slice(0, 16)}</span>
         </p>
       </footer>
     </section>

@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight, RotateCcw, Eye } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import type { EvidenceEvent } from '@/lib/fixtures'
+import type { EvidenceEvent } from '@/lib/view-types'
 
 // ReplayStepper: read-only chronological snapshots with Previous / Next /
 // Return to latest. Financial action controls are absent while replay is

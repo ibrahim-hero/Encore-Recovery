@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Inbox } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { formatMoney } from '@/lib/money'
-import type { RecoveryCase, CaseStatus } from '@/lib/fixtures'
+import type { CaseSummary, CaseStatus } from '@/lib/view-types'
 import { StatusChip } from './status-chip'
 
 const filters: { value: CaseStatus | 'ALL'; label: string }[] = [
@@ -23,7 +23,7 @@ const statusChip: Record<CaseStatus, { tone: 'attention' | 'info' | 'confirmed';
 
 // Recovery queue: owned cases, exact status filters, most recent update,
 // currency-aware amounts, and a useful empty state (plan section 23).
-export function QueueList({ cases }: { cases: RecoveryCase[] }) {
+export function QueueList({ cases }: { cases: CaseSummary[] }) {
   const [filter, setFilter] = useState<CaseStatus | 'ALL'>('ALL')
   const visible = cases.filter((c) => filter === 'ALL' || c.status === filter)
 

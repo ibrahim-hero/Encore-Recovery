@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { X } from 'lucide-react'
-import type { TruthFact } from '@/lib/fixtures'
+import type { TruthFact } from '@/lib/view-types'
 
 // EvidenceDrawer: sanitized structured facts — source type, resource ID,
 // observation time, and source hash/reference. Never raw secret-bearing JSON

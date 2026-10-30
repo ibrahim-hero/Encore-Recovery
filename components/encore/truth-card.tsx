@@ -1,6 +1,6 @@
 import { CalendarCheck, Store, Landmark } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import type { TruthFact } from '@/lib/fixtures'
+import type { TruthFact } from '@/lib/view-types'
 import { StatusChip } from './status-chip'
 
 const sourceIcons = {

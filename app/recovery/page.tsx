@@ -1,6 +1,5 @@
 import { AppRail } from '@/components/encore/app-rail'
-import { QueueList } from '@/components/encore/queue-list'
-import { fixtureCases } from '@/lib/fixtures'
+import { LiveQueue } from '@/components/encore/live-queue'
 
 export default function RecoveryPage() {
   return (
@@ -16,7 +15,7 @@ export default function RecoveryPage() {
             </p>
           </header>
           <div className="mt-6">
-            <QueueList cases={fixtureCases} />
+            <LiveQueue />
           </div>
         </div>
       </main>
