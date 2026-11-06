@@ -1,33 +1,47 @@
-# Encore-Recovery
+# Encore Recovery
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
+A merchant-side refund-recovery prototype built on the PayPal Sandbox. When a merchant cannot deliver a paid booking, Encore Recovery diagnoses the case with AI, proposes a full refund, and executes it only after a human approves, with money-movement safety guarantees.
 
-## Built with v0
+## How it works
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
+1. A customer books and pays through PayPal Sandbox. The capture is verified server-side.
+2. The merchant marks the booking as unfulfillable. This creates a recovery case.
+3. An AI diagnosis (AI SDK) reads a server-built snapshot of the booking, policy, and payment. Its output is schema-validated. It may cite evidence but can never set an amount, recipient, or URL.
+4. Deterministic eligibility rules build the refund plan. The plan is bound to a fingerprint of the facts it was built from, so any change makes it stale.
+5. The merchant approves. A durable outbox job sends the refund with an idempotent request ID.
+6. Provider responses and verified webhooks are reduced to a final state and an evidence receipt.
 
-[Continue working on v0 →](https://v0.app/chat/projects/prj_rDYXjHcIsgg5CwgZLXmOMxB4Bmlf)
+## Safety guarantees
 
-## Getting Started
+- Amounts always come from verified server-side records, never from the client or the model.
+- Refunds are sent once per operation using a stable `PayPal-Request-Id`. A lost response becomes `UNKNOWN`, which is visible and recoverable by replay or by a verified webhook.
+- Webhooks are signature-verified before any state change. Forged events leave no trace in operations, jobs, or audit data.
+- Mutations require a session cookie, a CSRF double-submit token, and a same-origin check. Request bodies use strict schemas that reject extra fields.
+- Stale events (for example a late `PENDING` after completion) cannot move a completed operation backward.
 
-First, run the development server:
+## Stack
+
+Next.js 16, pnpm, plain `pg` with SQL migrations (no ORM), Neon Postgres, a durable outbox worker, AG Studio widgets on `/recovery`, and the AI SDK via Vercel AI Gateway (default `openai/gpt-5-mini`, fallback `google/gemini-2.5-flash`).
+
+Without a database or PayPal credentials the app falls back to in-process PGlite and a fixture PayPal provider, so everything runs locally with no setup.
+
+## Running locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `/demo` to book, pay, fail the booking, and recover it. Open `/recovery` for the AG Studio dashboard.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+With real services, set `DATABASE_URL`, `APP_MODE=sandbox`, the `PAYPAL_*` credentials, and `PAYPAL_WEBHOOK_ID`, then run `pnpm db:migrate`. Register `https://<your-domain>/api/webhooks/paypal` in the PayPal Sandbox app for the refund events. The queue is drained by the client-driven `/api/jobs/tick`, or by `pnpm worker`.
 
-## Learn More
+## Tests
 
-To learn more, take a look at the following resources:
+```bash
+pnpm test              # all
+pnpm test:unit         # eligibility, reducer, money, AI contract
+pnpm test:integration  # payment, recovery, interruption, and security paths
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
+The suite covers the full money path and the failure cases: dropped responses, a refund the database never recorded, replayed and out-of-order webhooks, forged signatures, CSRF and origin attacks, and tampered inputs.
