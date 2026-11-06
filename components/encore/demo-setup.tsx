@@ -74,8 +74,8 @@ export function DemoSetup() {
     })
 
   return (
-    <div className="flex flex-col gap-6">
-      <section aria-labelledby="config-heading" className="rounded-xl border border-line bg-surface p-4 md:p-5">
+    <div className="flex flex-col gap-6 xl:grid xl:grid-cols-[minmax(0,30rem)_minmax(0,1fr)] xl:items-start xl:gap-x-10">
+      <section aria-labelledby="config-heading" className="xl:col-start-1 rounded-xl border border-line bg-surface p-4 md:p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 id="config-heading" className="text-sm font-semibold tracking-wide text-ink">
             Configuration
@@ -104,7 +104,7 @@ export function DemoSetup() {
         )}
       </section>
 
-      <section aria-labelledby="create-heading">
+      <section aria-labelledby="create-heading" className="xl:col-start-1">
         <h2 id="create-heading" className="text-sm font-semibold tracking-wide text-ink">
           Create a demonstration booking
         </h2>
@@ -127,13 +127,13 @@ export function DemoSetup() {
       </section>
 
       {message && (
-        <p role="alert" className="flex items-start gap-2 rounded-lg bg-failure-bg p-3 text-sm text-failure">
+        <p role="alert" className="flex items-start gap-2 rounded-lg bg-failure-bg p-3 text-sm text-failure xl:col-start-1">
           <AlertTriangle aria-hidden className="mt-0.5 size-4 shrink-0" />
           {message}
         </p>
       )}
 
-      <section aria-labelledby="bookings-heading">
+      <section aria-labelledby="bookings-heading" className="xl:col-start-2 xl:row-span-3 xl:row-start-1">
         <h2 id="bookings-heading" className="text-sm font-semibold tracking-wide text-ink">
           Bookings in this workspace
         </h2>

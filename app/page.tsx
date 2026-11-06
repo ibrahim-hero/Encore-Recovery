@@ -7,7 +7,7 @@ import { HeroProof } from '@/components/encore/hero-proof'
 // works, and a visible sandbox purpose (plan section 23).
 export default function EntryPage() {
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-4 py-6 md:px-8">
+    <main className="mx-auto flex min-h-screen w-full max-w-[1600px] flex-col px-4 py-6 md:px-10">
       <header className="flex items-center justify-between">
         <Wordmark />
         <span className="rounded-full bg-attention-bg px-3 py-1 text-xs font-semibold text-attention">

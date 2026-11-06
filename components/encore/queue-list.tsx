@@ -58,7 +58,7 @@ export function QueueList({ cases }: { cases: CaseSummary[] }) {
           </p>
         </div>
       ) : (
-        <ul className="mt-6 space-y-3">
+        <ul className="mt-6 grid gap-3 xl:grid-cols-2">
           {visible.map((c) => {
             const chip = statusChip[c.status]
             return (

@@ -25,7 +25,7 @@ export function ReceiptsList() {
   }
 
   return (
-    <ul className="mt-6 flex flex-col gap-3">
+    <ul className="mt-6 grid gap-3 xl:grid-cols-2">
       {data.receipts.map((r) => (
         <li key={`${r.caseId}-${r.version}`}>
           <Link

@@ -64,7 +64,7 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
 
   if (error && !data) {
     return (
-      <div className="mx-auto w-full max-w-5xl px-4 py-10">
+      <div className="mx-auto w-full max-w-[1760px] px-4 py-10 md:px-8">
         <p className="text-base font-medium text-ink">
           {error instanceof ApiError && error.status === 404 ? 'Case not found in this workspace.' : 'Could not load this case.'}
         </p>
@@ -89,7 +89,7 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
   const execute = () => run('execute', () => apiPost(`/api/recovery/plans/${caseData.preview!.planId}/execute`))
 
   return (
-    <div className="mx-auto w-full max-w-5xl px-4 pb-28 pt-6 md:pb-12 md:pt-8" data-replay={replaying ? 'true' : undefined}>
+    <div className="mx-auto w-full max-w-[1760px] px-4 pb-28 pt-6 md:px-8 md:pb-12 md:pt-10" data-replay={replaying ? 'true' : undefined}>
       <header className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="text-xs font-medium tracking-widest text-ink-muted">CASE</p>
@@ -137,15 +137,23 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
         </p>
       )}
 
-      <div className="mt-5 flex flex-col gap-5">
+      <div className="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] xl:items-start">
+        <div className="flex flex-col gap-5">
+          {!replaying && (
+            <>
+              <AnalysisPanel
+                caseData={caseData}
+                analyzing={pending === 'analyze'}
+                onAnalyze={() => run('analyze', () => apiPost(`/api/recovery/cases/${caseId}/analyze`))}
+              />
+              <RecoveryPreview caseData={caseData} onExecute={execute} executing={pending === 'execute'} />
+            </>
+          )}
+          {replaying && <EvidenceReceipt caseData={caseData} />}
+        </div>
+        <div className="flex flex-col gap-5">
         {!replaying && (
           <>
-            <AnalysisPanel
-              caseData={caseData}
-              analyzing={pending === 'analyze'}
-              onAnalyze={() => run('analyze', () => apiPost(`/api/recovery/cases/${caseId}/analyze`))}
-            />
-            <RecoveryPreview caseData={caseData} onExecute={execute} executing={pending === 'execute'} />
             <FaultLab
               caseData={caseData}
               arming={pending === 'arm'}
@@ -161,10 +169,11 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
             )}
           </>
         )}
-        <EvidenceReceipt caseData={caseData} />
+        {!replaying && <EvidenceReceipt caseData={caseData} />}
         {caseData.events.length > 0 && (
           <ReplayStepper events={caseData.events} activeIndex={replayIndex} onSelect={setReplayIndex} />
         )}
+        </div>
       </div>
 
       {!replaying && caseData.preview && caseData.can.execute && (
@@ -180,7 +189,7 @@ export function CaseWorkspace({ caseId }: { caseId: string }) {
 
 function CaseSkeleton() {
   return (
-    <div className="mx-auto w-full max-w-5xl px-4 pt-6 md:pt-8" aria-busy="true" aria-label="Loading case">
+    <div className="mx-auto w-full max-w-[1760px] px-4 pt-6 md:px-8 md:pt-10" aria-busy="true" aria-label="Loading case">
       <div className="h-8 w-48 animate-pulse rounded-lg bg-surface-subdued" />
       <div className="mt-6 flex flex-col gap-4 md:flex-row">
         {[0, 1, 2].map((i) => (
