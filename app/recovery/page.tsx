@@ -3,7 +3,8 @@ import { RecoveryWorkspace } from '@/components/encore/studio/recovery-workspace
 
 export default function RecoveryPage() {
   // AG licence keys are designed to ship to the browser; reading it here keeps it configurable per deployment.
-  const licenseKey = process.env.AG_STUDIO_LICENSE_KEY
+  // V2 exists because the v0 env form cannot re-prompt an existing variable when the key is rotated.
+  const licenseKey = process.env.AG_STUDIO_LICENSE_KEY_V2 ?? process.env.AG_STUDIO_LICENSE_KEY
   return (
     <div className="min-h-screen md:flex">
       <AppRail active="/recovery" />
