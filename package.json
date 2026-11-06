@@ -1,6 +1,7 @@
 {
-  "name": "my-project",
-  "version": "0.1.0",
+  "name": "encore-recovery",
+  "version": "1.0.0",
+  "description": "Merchant-side PayPal Sandbox refund recovery with AI diagnosis and verified idempotent refunds",
   "private": true,
   "packageManager": "pnpm@12.3.4",
   "scripts": {
