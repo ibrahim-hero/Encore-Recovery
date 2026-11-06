@@ -36,6 +36,10 @@ Open `/demo` to book, pay, fail the booking, and recover it. Open `/recovery` fo
 
 With real services, set `DATABASE_URL`, `APP_MODE=sandbox`, the `PAYPAL_*` credentials, and `PAYPAL_WEBHOOK_ID`, then run `pnpm db:migrate`. Register `https://<your-domain>/api/webhooks/paypal` in the PayPal Sandbox app for the refund events. The queue is drained by the client-driven `/api/jobs/tick`, or by `pnpm worker`.
 
+## License
+
+MIT. See `LICENSE`.
+
 ## Tests
 
 ```bash

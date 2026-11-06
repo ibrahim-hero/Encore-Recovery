@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowRight, ShieldCheck, Eye, FlaskConical } from 'lucide-react'
 import { Wordmark, ReconnectGlyph } from '@/components/encore/wordmark'
+import { HeroProof } from '@/components/encore/hero-proof'
 
 // Product entry: brief explanation, Start guided sandbox demo, View how it
 // works, and a visible sandbox purpose (plan section 23).
@@ -14,7 +15,8 @@ export default function EntryPage() {
         </span>
       </header>
 
-      <div className="flex flex-1 flex-col justify-center py-16">
+      <div className="grid flex-1 items-center gap-10 py-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
+        <div className="flex flex-col">
         <ReconnectGlyph className="h-2 w-12" />
         <h1 className="mt-6 max-w-2xl text-balance text-4xl font-semibold tracking-tight text-ink md:text-5xl">
           When a booking is paid but can&apos;t be fulfilled, prove it — then refund it.
@@ -47,6 +49,8 @@ export default function EntryPage() {
           payment and refund fact is a verified sandbox read, and the merchant failure is a labeled
           simulation.
         </p>
+        </div>
+        <HeroProof />
       </div>
 
       <footer className="grid gap-3 border-t border-line pt-6 sm:grid-cols-3">
