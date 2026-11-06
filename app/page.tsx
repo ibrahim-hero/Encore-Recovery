@@ -1,83 +1,108 @@
 import Link from 'next/link'
-import { ArrowRight, ShieldCheck, Eye, FlaskConical } from 'lucide-react'
-import { Wordmark, ReconnectGlyph } from '@/components/encore/wordmark'
+import { ArrowRight, ShieldCheck, Eye, Repeat2, FlaskConical } from 'lucide-react'
+import { Wordmark } from '@/components/encore/wordmark'
 import { HeroProof } from '@/components/encore/hero-proof'
 
-// Product entry: brief explanation, Start guided sandbox demo, View how it
-// works, and a visible sandbox purpose (plan section 23).
+const principles = [
+  {
+    icon: ShieldCheck,
+    title: 'Verified, never assumed',
+    body: 'Paid and refunded states come only from direct PayPal reads and verified webhooks, never from local guesses.',
+  },
+  {
+    icon: Repeat2,
+    title: 'One refund, however it fails',
+    body: 'A durable outbox and a stable request key make a lost response recoverable without a second refund.',
+  },
+  {
+    icon: Eye,
+    title: 'Evidence on demand',
+    body: 'Every case ends in an immutable receipt with observed facts, timestamps, and a replayable event record.',
+  },
+]
+
+const steps = [
+  ['Book and pay', 'A real PayPal Sandbox order is captured.'],
+  ['Merchant fails', 'The venue cannot fulfill; the failure is a labeled simulation.'],
+  ['Diagnose', 'AI proposes one action; rules decide if it is eligible.'],
+  ['Refund and prove', 'The refund executes once and produces the receipt.'],
+]
+
 export default function EntryPage() {
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-[1600px] flex-col px-4 py-6 md:px-10">
-      <header className="flex items-center justify-between">
-        <Wordmark />
-        <span className="rounded-full bg-attention-bg px-3 py-1 text-xs font-semibold text-attention">
-          SANDBOX
-        </span>
-      </header>
+    <main className="min-h-screen bg-canvas">
+      <section className="bg-ink text-surface">
+        <div className="mx-auto flex w-full max-w-[1600px] flex-col px-4 pb-16 pt-6 md:px-10 md:pb-24">
+          <header className="flex items-center justify-between">
+            <Wordmark tone="light" />
+            <span className="rounded-sm bg-attention-bg px-2.5 py-1 text-[10px] font-bold tracking-widest text-attention">
+              SANDBOX
+            </span>
+          </header>
 
-      <div className="grid flex-1 items-center gap-10 py-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
-        <div className="flex flex-col">
-        <ReconnectGlyph className="h-2 w-12" />
-        <h1 className="mt-6 max-w-2xl text-balance text-4xl font-semibold tracking-tight text-ink md:text-5xl">
-          When a booking is paid but can&apos;t be fulfilled, prove it — then refund it.
-        </h1>
-        <p className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-ink-body">
-          Encore Recovery reconciles three sources of truth — the booking, merchant fulfillment, and
-          PayPal money — diagnoses the disagreement, and executes a verified, idempotent refund with
-          an immutable evidence receipt.
-        </p>
-
-        <div className="mt-8 flex flex-wrap items-center gap-3">
-          <Link
-            href="/demo"
-            className="flex min-h-11 items-center gap-2 rounded-lg bg-action px-5 text-sm font-semibold text-surface transition-colors hover:bg-action-hover"
-          >
-            <FlaskConical aria-hidden className="size-4" />
-            Start guided sandbox demo
-          </Link>
-          <Link
-            href="/recovery"
-            className="flex min-h-11 items-center gap-2 rounded-lg border border-line bg-surface px-5 text-sm font-semibold text-ink transition-colors hover:bg-surface-subdued"
-          >
-            <Eye aria-hidden className="size-4" />
-            View how it works
-          </Link>
-        </div>
-
-        <p className="mt-6 max-w-xl text-sm leading-relaxed text-ink-muted">
-          This demonstration runs entirely against PayPal Sandbox. No real money moves; every
-          payment and refund fact is a verified sandbox read, and the merchant failure is a labeled
-          simulation.
-        </p>
-        </div>
-        <HeroProof />
-      </div>
-
-      <footer className="grid gap-3 border-t border-line pt-6 sm:grid-cols-3">
-        {[
-          {
-            icon: ShieldCheck,
-            title: 'Verified, never assumed',
-            body: 'Paid and refunded states come only from direct provider reads.',
-          },
-          {
-            icon: ArrowRight,
-            title: 'One next action',
-            body: 'Each case presents a single validated action with its exact reason.',
-          },
-          {
-            icon: Eye,
-            title: 'Evidence on demand',
-            body: 'Structured facts, observation times, and a replayable record.',
-          },
-        ].map((f) => (
-          <div key={f.title} className="rounded-xl border border-line bg-surface p-4">
-            <f.icon aria-hidden className="size-4 text-action" />
-            <h2 className="mt-2 text-sm font-semibold text-ink">{f.title}</h2>
-            <p className="mt-1 text-sm leading-relaxed text-ink-muted">{f.body}</p>
+          <div className="grid items-center gap-12 pt-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20 lg:pt-24">
+            <div className="flex flex-col">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-surface/60">
+                Merchant refund recovery for PayPal
+              </p>
+              <h1 className="mt-5 max-w-3xl text-balance text-4xl font-extrabold leading-[1.05] text-surface md:text-6xl">
+                Paid, but can&apos;t be fulfilled? Prove it, then refund it once.
+              </h1>
+              <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-surface/75">
+                Encore Recovery reconciles the booking, the merchant&apos;s fulfillment, and the PayPal money. It diagnoses the
+                disagreement, runs one verified, idempotent refund, and seals the result in an evidence receipt.
+              </p>
+              <div className="mt-9 flex flex-wrap gap-3">
+                <Link
+                  href="/demo"
+                  className="inline-flex min-h-12 items-center gap-2 rounded-md bg-action px-5 text-sm font-semibold text-surface transition-colors hover:bg-action-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface"
+                >
+                  <FlaskConical aria-hidden className="size-4" />
+                  Start guided sandbox demo
+                </Link>
+                <a
+                  href="#how"
+                  className="inline-flex min-h-12 items-center gap-2 rounded-md border border-surface/30 px-5 text-sm font-semibold text-surface transition-colors hover:bg-surface/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface"
+                >
+                  How it works
+                  <ArrowRight aria-hidden className="size-4" />
+                </a>
+              </div>
+              <p className="mt-8 max-w-xl text-sm leading-relaxed text-surface/60">
+                Runs entirely against PayPal Sandbox. No real money moves, and the merchant failure is a labeled simulation.
+              </p>
+            </div>
+            <HeroProof />
           </div>
-        ))}
-      </footer>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-[1600px] px-4 py-16 md:px-10 md:py-24">
+        <div className="grid gap-10 md:grid-cols-3 md:gap-12">
+          {principles.map((p) => (
+            <div key={p.title} className="border-t-2 border-ink pt-5">
+              <p.icon aria-hidden className="size-5 text-action" />
+              <h2 className="mt-4 text-xl font-bold text-ink">{p.title}</h2>
+              <p className="mt-2 max-w-sm text-pretty leading-relaxed text-ink-body">{p.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="how" className="border-t border-line bg-surface">
+        <div className="mx-auto w-full max-w-[1600px] px-4 py-16 md:px-10 md:py-24">
+          <h2 className="text-3xl font-extrabold text-ink md:text-4xl">From failure to receipt in four steps</h2>
+          <ol className="mt-10 grid gap-px overflow-hidden rounded-lg border border-line bg-line md:grid-cols-4">
+            {steps.map(([title, body], i) => (
+              <li key={title} className="flex flex-col gap-2 bg-surface p-6">
+                <span className="tnum text-sm font-bold text-action">Step {i + 1}</span>
+                <span className="text-lg font-bold text-ink">{title}</span>
+                <span className="text-pretty leading-relaxed text-ink-body">{body}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
     </main>
   )
 }

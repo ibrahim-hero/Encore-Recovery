@@ -33,7 +33,7 @@ export function TruthCard({
   const tone = override?.tone ?? fact.tone
 
   return (
-    <article className="flex min-w-0 flex-1 flex-col rounded-xl border border-line bg-surface p-4 shadow-[0_1px_2px_rgb(20_43_53/0.04)]">
+    <article className="flex min-w-0 flex-1 flex-col rounded-lg border border-line bg-surface p-4 shadow-[0_1px_2px_rgb(20_43_53/0.04)]">
       <header className="flex items-center justify-between gap-2">
         <span className="flex items-center gap-1.5 text-[11px] font-semibold tracking-widest text-ink-muted">
           <Icon aria-hidden className="size-3.5" />

@@ -193,7 +193,7 @@ function CaseSkeleton() {
       <div className="h-8 w-48 animate-pulse rounded-lg bg-surface-subdued" />
       <div className="mt-6 flex flex-col gap-4 md:flex-row">
         {[0, 1, 2].map((i) => (
-          <div key={i} className="h-44 flex-1 animate-pulse rounded-xl bg-surface-subdued" />
+          <div key={i} className="h-44 flex-1 animate-pulse rounded-lg bg-surface-subdued" />
         ))}
       </div>
     </div>

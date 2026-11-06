@@ -60,33 +60,34 @@
   --color-foreground: var(--ink-body);
   --color-background: var(--canvas);
 
-  --radius-sm: 0.5rem; /* 8px controls */
-  --radius-md: 0.625rem;
-  --radius-lg: 0.75rem; /* 12px cards */
-  --radius-xl: 1rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
 
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-manrope), 'Manrope', ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
 }
 
 :root {
-  --canvas: #f5f3ee;
+  --canvas: #e9edf2;
   --surface: #ffffff;
-  --surface-subdued: #eef2f1;
-  --ink: #142b35;
-  --ink-body: #253d46;
-  --ink-muted: #53666d;
-  --action: #006c67;
-  --action-hover: #005a56;
-  --link: #275ac7;
+  --surface-subdued: #f1f4f8;
+  --ink: #0a1626;
+  --ink-body: #243447;
+  --ink-muted: #556678;
+  --action: #1b55e0;
+  --action-hover: #1544b8;
+  --link: #1b55e0;
   --attention: #8a4b08;
   --attention-bg: #fff0d8;
   --failure: #a63237;
   --failure-bg: #fbecee;
   --confirmed: #0d6a49;
   --confirmed-bg: #e9f6ef;
-  --line: #d7dedc;
-  --radius: 0.75rem;
+  --line: #d3dae3;
+  --radius: 0.5rem;
 }
 
 /* Money and IDs always use tabular numerals (plan section 19). */
@@ -144,5 +145,14 @@
 @media (max-width: 47.99rem) {
   :root:has([data-sticky-action]) {
     scroll-padding-bottom: 6rem;
+  }
+}
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
   }
 }

@@ -40,7 +40,7 @@ export function HeroProof() {
       aria-label="Example case: the booking, the merchant, and PayPal disagree"
       className="flex flex-col gap-2"
     >
-      <figcaption className="text-xs font-semibold tracking-widest text-ink-muted">
+      <figcaption className="text-xs font-semibold tracking-widest text-surface/60">
         EXAMPLE CASE, THREE SOURCES
       </figcaption>
       {exampleFacts.map((fact, i) => (

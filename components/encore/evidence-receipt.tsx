@@ -18,7 +18,7 @@ export function EvidenceReceipt({ caseData }: { caseData: CaseView }) {
   ]
 
   return (
-    <section aria-labelledby="receipt-heading" className="receipt-paper relative rounded-xl p-5 md:p-6">
+    <section aria-labelledby="receipt-heading" className="receipt-paper relative rounded-lg p-5 md:p-6">
       <div className="receipt-perforation absolute inset-x-4 top-0" aria-hidden />
 
       <header className="flex flex-wrap items-center justify-between gap-3 pt-1">

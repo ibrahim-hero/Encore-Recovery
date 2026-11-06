@@ -17,7 +17,7 @@ export function MismatchRibbon({
     <div
       role="status"
       className={cn(
-        'flex items-start gap-3 rounded-xl border px-4 py-3',
+        'flex items-start gap-3 rounded-lg border px-4 py-3',
         resolved ? 'border-confirmed/30 bg-confirmed-bg' : 'border-attention/30 bg-attention-bg',
       )}
     >

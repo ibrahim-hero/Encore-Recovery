@@ -20,7 +20,7 @@ export function AnalysisPanel({
   if (caseData.preview || caseData.operation || caseData.caseState === 'RESOLVED_REFUNDED') return null
 
   return (
-    <section aria-labelledby="analysis-heading" aria-live="polite" className="rounded-xl border border-line bg-surface p-4 md:p-5">
+    <section aria-labelledby="analysis-heading" aria-live="polite" className="rounded-lg border border-line bg-surface p-4 md:p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
           <h2 id="analysis-heading" className="flex items-center gap-2 text-sm font-semibold tracking-wide text-ink">
@@ -97,7 +97,7 @@ export function FaultLab({
   return (
     <section
       aria-labelledby="fault-lab-heading"
-      className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-dashed border-line bg-surface p-4"
+      className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-dashed border-line bg-surface p-4"
     >
       <div className="min-w-0">
         <h2 id="fault-lab-heading" className="flex items-center gap-2 text-sm font-semibold text-ink">

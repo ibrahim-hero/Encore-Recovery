@@ -49,7 +49,7 @@ export function QueueList({ cases }: { cases: CaseSummary[] }) {
       </div>
 
       {visible.length === 0 ? (
-        <div className="mt-6 flex flex-col items-center rounded-xl border border-dashed border-line bg-surface px-6 py-12 text-center">
+        <div className="mt-6 flex flex-col items-center rounded-lg border border-dashed border-line bg-surface px-6 py-12 text-center">
           <Inbox aria-hidden className="size-6 text-ink-muted" />
           <p className="mt-3 text-sm font-medium text-ink">No cases in this state</p>
           <p className="mt-1 max-w-sm text-sm leading-relaxed text-ink-muted">
@@ -65,7 +65,7 @@ export function QueueList({ cases }: { cases: CaseSummary[] }) {
               <li key={c.id}>
                 <Link
                   href={`/case/${c.id}`}
-                  className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-line bg-surface p-4 transition-colors hover:bg-surface-subdued/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
+                  className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-line bg-surface p-4 transition-colors hover:bg-surface-subdued/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
