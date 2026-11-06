@@ -14,22 +14,22 @@ const nav = [
 export function AppRail({ active }: { active?: string }) {
   return (
     <>
-      {/* Desktop rail */}
-      <aside className="print-hidden sticky top-0 hidden h-screen w-16 shrink-0 flex-col items-center border-r border-line bg-surface py-4 md:flex">
-        <Link href="/" aria-label="Encore Recovery home" className="mb-8">
-          <Wordmark compact />
+      {/* Desktop sidebar */}
+      <aside className="print-hidden sticky top-0 hidden h-screen w-60 shrink-0 flex-col bg-ink px-4 py-6 md:flex">
+        <Link href="/" aria-label="Encore Recovery home" className="px-2">
+          <Wordmark tone="light" />
         </Link>
-        <nav aria-label="Primary" className="flex flex-col gap-1">
+        <nav aria-label="Primary" className="mt-10 flex flex-col gap-1">
           {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               aria-current={active === item.href ? 'page' : undefined}
               className={cn(
-                'flex min-h-11 w-14 flex-col items-center justify-center gap-1 rounded-lg text-[10px] font-medium transition-colors',
+                'flex min-h-11 items-center gap-3 rounded-md px-3 text-sm font-semibold transition-colors',
                 active === item.href
-                  ? 'bg-surface-subdued text-ink'
-                  : 'text-ink-muted hover:bg-surface-subdued hover:text-ink',
+                  ? 'bg-surface/12 text-surface'
+                  : 'text-surface/65 hover:bg-surface/8 hover:text-surface',
               )}
             >
               <item.icon aria-hidden className="size-4" />
@@ -37,9 +37,12 @@ export function AppRail({ active }: { active?: string }) {
             </Link>
           ))}
         </nav>
-        <span className="mt-auto rounded-full bg-attention-bg px-2 py-1 text-[9px] font-semibold tracking-wide text-attention">
-          SANDBOX
-        </span>
+        <div className="mt-auto flex flex-col gap-2 border-t border-surface/15 px-2 pt-4">
+          <span className="w-fit rounded-sm bg-attention-bg px-2 py-0.5 text-[10px] font-bold tracking-widest text-attention">
+            SANDBOX
+          </span>
+          <p className="text-xs leading-relaxed text-surface/60">No real money moves. Every refund is a PayPal Sandbox read.</p>
+        </div>
       </aside>
 
       {/* Mobile top bar */}
@@ -54,7 +57,7 @@ export function AppRail({ active }: { active?: string }) {
               href={item.href}
               aria-current={active === item.href ? 'page' : undefined}
               className={cn(
-                'flex min-h-11 items-center gap-1.5 rounded-lg px-2.5 text-xs font-medium',
+                'flex min-h-11 items-center gap-1.5 rounded-md px-2.5 text-xs font-medium',
                 active === item.href ? 'bg-surface-subdued text-ink' : 'text-ink-muted',
               )}
             >

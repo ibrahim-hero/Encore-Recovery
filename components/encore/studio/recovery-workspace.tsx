@@ -13,7 +13,7 @@ const RecoveryStudio = dynamic(() => import('./recovery-studio').then((m) => m.R
 function StudioSkeleton() {
   return (
     <div
-      className="h-[min(80vh,820px)] min-h-[560px] animate-pulse rounded-xl bg-surface-subdued"
+      className="h-[min(80vh,820px)] min-h-[560px] animate-pulse rounded-lg bg-surface-subdued"
       aria-busy="true"
       aria-label="Loading recovery workspace"
     />

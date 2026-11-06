@@ -30,7 +30,7 @@ export function FixtureApproval() {
   }
 
   return (
-    <section className="rounded-xl border border-line bg-surface p-6">
+    <section className="rounded-lg border border-line bg-surface p-6">
       <p className="inline-flex items-center gap-1.5 rounded-full bg-surface-subdued px-2.5 py-1 text-xs font-medium text-link">
         <FlaskConical aria-hidden className="size-3.5" />
         Simulated provider approval (fixture mode)

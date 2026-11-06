@@ -22,7 +22,7 @@ export function RecoveryPreview({
   return (
     <section
       aria-labelledby="recovery-preview-heading"
-      className="rounded-xl border border-line bg-surface-subdued p-4 md:p-5"
+      className="rounded-lg border border-line bg-surface-subdued p-4 md:p-5"
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
@@ -113,7 +113,7 @@ export function OperationProgress({
       aria-labelledby="operation-progress-heading"
       aria-live="polite"
       className={cn(
-        'rounded-xl border p-4 md:p-5',
+        'rounded-lg border p-4 md:p-5',
         failed ? 'border-failure/30 bg-failure-bg' : 'border-attention/30 bg-attention-bg',
       )}
     >

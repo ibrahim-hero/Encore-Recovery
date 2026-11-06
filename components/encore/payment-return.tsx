@@ -62,7 +62,7 @@ function Panel({ icon, title, body, onRetry }: { icon: PanelIcon; title: string;
   const Icon = { loading: Loader2, confirmed: CheckCircle2, pending: Clock, failure: XCircle }[icon]
   const tone = { loading: 'text-ink-muted', confirmed: 'text-confirmed', pending: 'text-attention', failure: 'text-failure' }[icon]
   return (
-    <section aria-live="polite" className="rounded-xl border border-line bg-surface p-6 text-center">
+    <section aria-live="polite" className="rounded-lg border border-line bg-surface p-6 text-center">
       <Icon aria-hidden className={`mx-auto size-8 ${tone} ${icon === 'loading' ? 'animate-spin' : ''}`} />
       <h1 className="mt-3 text-xl font-semibold text-ink text-balance">{title}</h1>
       <p className="mx-auto mt-1 max-w-md text-sm leading-relaxed text-ink-muted text-pretty">{body}</p>

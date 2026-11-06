@@ -8,7 +8,7 @@ export default function DemoPage() {
     <div className="min-h-screen md:flex">
       <AppRail active="/demo" />
       <main className="min-w-0 flex-1">
-        <div className="mx-auto w-full max-w-3xl px-4 py-6 md:py-8">
+        <div className="mx-auto w-full max-w-[1760px] px-4 md:px-8 py-6 md:py-10">
           <header>
             <h1 className="text-2xl font-semibold tracking-tight text-ink md:text-3xl">Demo setup</h1>
             <p className="mt-1 text-sm leading-relaxed text-ink-muted">

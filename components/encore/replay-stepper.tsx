@@ -19,7 +19,7 @@ export function ReplayStepper({
   const replaying = activeIndex !== null
 
   return (
-    <section aria-labelledby="replay-heading" className="rounded-xl border border-line bg-surface p-4">
+    <section aria-labelledby="replay-heading" className="rounded-lg border border-line bg-surface p-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 id="replay-heading" className="text-sm font-semibold text-ink">
           Recorded sequence

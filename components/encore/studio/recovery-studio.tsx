@@ -182,7 +182,7 @@ export function RecoveryStudio({ licenseKey, cases, receipts }: RecoveryStudioPr
         </div>
       </div>
 
-      <div className="h-[min(80vh,820px)] min-h-[560px] overflow-hidden rounded-xl border border-line bg-surface">
+      <div className="h-[min(80vh,820px)] min-h-[560px] overflow-hidden rounded-lg border border-line bg-surface">
         <AgStudioProvider licenseKey={licenseKey}>
           <AgStudio
             ref={studioRef}
