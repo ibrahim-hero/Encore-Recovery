@@ -16,9 +16,10 @@ const envSchema = z.object({
   PAYPAL_MERCHANT_ID: optional,
   PAYPAL_WEBHOOK_ID: optional,
   INTERNAL_JOB_TOKEN: optional,
-  AI_MODEL: z.string().default('anthropic/claude-sonnet-5.5'),
-  // Tried in order when the primary is unavailable (e.g. AI Gateway free tier).
-  AI_FALLBACK_MODELS: z.string().default('openai/gpt-5-mini,google/gemini-2.5-flash'),
+  // Free AI Gateway tier blocks frontier models, so the primary is one that works there.
+  AI_MODEL: z.string().default('openai/gpt-5-mini'),
+  // Tried in order when the primary is unavailable.
+  AI_FALLBACK_MODELS: z.string().default('google/gemini-2.5-flash'),
   FIXTURE_REFUND_COMPLETE_MS: z.coerce.number().int().min(0).default(4000),
 })
 
